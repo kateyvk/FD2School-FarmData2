@@ -18,6 +18,7 @@
         <h3>End Date: {{ endDate }}</h3>
         <label for="end-date">End Date:</label>
         <input type="date" id="end-date" v-model="endDate">
+
         
 
 
@@ -30,11 +31,36 @@
         </select>
         
         <h3>Selected Area: {{ selectedArea }}</h3>
-        
+
         <label for="area">Select Area</label>
         <select id="area" v-model="selectedArea">
             <option v-for="area in areas" :key="area" :value="area">{{ area }}</option>
         </select>
+
+        <h2>Harvest Logs</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Crop</th>
+                    <th>Area</th>
+                    <th>Yield</th>
+                    <th>Units</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="log in harvLogs" :key="log.date">
+
+                    <td> {{ log.date }}</td>
+                    <td> {{ log.crop }}</td>
+                    <td> {{ log.area }}</td>
+                    <td> {{ log.yield }}</td>
+                    <td> {{ log.units }}</td>
+                </tr>
+            </tbody>
+
+        </table>
+        
 
 
 
@@ -50,7 +76,8 @@
                 selectedCrop:"Wheat",
                 selectedArea: " ",
                 crops: ["Wheat","Corn","Onions","Lettuce"],
-                areas: ["Field1","Field2"]
+                areas: ["Field1","Field2"],
+                harvLogs: [{date: "2018-05-02", crop: "Corn", area: "Field1",yield:  10, units: "Cobs"},{date: "2018-05-02", crop: "Lettuce", area: "Field2",yield:  5, units: "Bunches"}]
             }
         });
     </script>
