@@ -9,14 +9,41 @@
     <div id="vue-app" v-cloak>
         <input type="text" v-model="reportTitle">
         <h2>{{ reportTitle }}</h2>
+
+        <h3>Start Date: {{ startDate }}</h3>
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" v-model="startDate">
+        
+
+
+        <h3>End Date: {{ endDate }}</h3>
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date" v-model="endDate">
+        
+
+
+
+        <h3>Selected Crop: {{ selectedcrop }}</h3>
+        <label for="crop">Select Crop:</label>
+        <select id="crop" v-model="selectedcrop">
+            <option value="Wheat">Wheat</option>
+            <option value="Corn">Corn</option>
+
+        </select>
+        
+
+
+
     </div>
    
     <script>
         var app= new Vue({
             el: '#vue-app',
             data: {
-                reportTitle: 'My Sample Harvest Report'
-                
+                reportTitle: 'My Sample Harvest Report',
+                startDate: " ",
+                endDate: " ",
+                selectedcrop: "Corn"
             }
         });
     </script>
