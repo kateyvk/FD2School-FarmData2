@@ -1,4 +1,24 @@
-<div>
-    <h3>Vue</h3>
-    <p>Hello world</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>VUE Example</title>
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <div id="vue-app" v-cloak>
+        <input type="text" v-model="reportTitle">
+        <h2>{{ reportTitle }}</h2>
+    </div>
+   
+    <script>
+        var app= new Vue({
+            el: '#vue-app',
+            data: {
+                reportTitle: 'My Sample Harvest Report'
+                
+            }
+        });
+    </script>
+  </body>
+</html>
