@@ -7,14 +7,13 @@
   </head>
   <body>
     <div id="vue-app" v-cloak>
-        <input type="text" v-model="reportTitle">
+        <input type="text" v-model="reportTitle" >
         <h2>{{ reportTitle ? reportTitle : 'Mock Harvest Report'}}</h2>
 
         <h3>Start Date: {{ startDate }}</h3>
         <label for="start-date">Start Date:</label>
         <input type="date" id="start-date" v-model="startDate">
         
-
 
         <h3>End Date: {{ endDate }}</h3>
         <label for="end-date">End Date:</label>
@@ -23,14 +22,19 @@
 
 
 
-        <h3>Selected Crop: {{ selectedcrop }}</h3>
-        <label for="crop">Select Crop:</label>
-        <select id="crop" v-model="selectedcrop">
-            <option value="Wheat">Wheat</option>
-            <option value="Corn">Corn</option>
+        <h3>Selected Crop: {{ selectedCrop }}</h3>
 
+        <label for="crop">Select Crop:</label>
+        <select id="crop" v-model="selectedCrop">
+            <option v-for="crop in crops" :key="crop" :value="crop">{{ crop }}</option>
         </select>
         
+        <h3>Selected Area: {{ selectedArea }}</h3>
+        
+        <label for="area">Select Area</label>
+        <select id="area" v-model="selectedArea">
+            <option v-for="area in areas" :key="area" :value="area">{{ area }}</option>
+        </select>
 
 
 
@@ -43,7 +47,10 @@
                 reportTitle: 'My Sample Harvest Report',
                 startDate: " ",
                 endDate: " ",
-                selectedcrop: "Corn"
+                selectedCrop:"Wheat",
+                selectedArea: " ",
+                crops: ["Wheat","Corn","Onions","Lettuce"],
+                areas: ["Field1","Field2"]
             }
         });
     </script>
