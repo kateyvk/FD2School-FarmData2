@@ -23,12 +23,12 @@
 
         <h3>Start Date: {{ startDate }}</h3>
         <label for="start-date">Start Date:</label>
-        <input type="date" id="start-date" v-model="startDate">
+        <input type="date" id="start-date" v-model="startDate" v-bind:max="endDate">
         
 
         <h3>End Date: {{ endDate }}</h3>
         <label for="end-date">End Date:</label>
-        <input type="date" id="end-date" v-model="endDate">
+        <input type="date" id="end-date" v-model="endDate" v-bind:min="startDate">
 
         
 
@@ -103,6 +103,7 @@
             },
             methods: {
                 generateReport: function(){
+                    
                     this.harvLogs.push({
                         date: this.startDate,
                         area: this.selectedArea,
