@@ -119,17 +119,29 @@
             methods: {
                 generateReport: function(){
 
-                    this.Farm="Sample Farm";
-                    this.User="manager1";
-                    this.Language="English";
+                    axios.get('/farm.json')
+                    .then((response)=>{
+                        this.Farm = response.data.name;
+                        this.User = response.data.user.name;
+                        this.Language = response.data.language;
+
+                        this.harvLogs.push({
+                            date: this.startDate,
+                            area: this.selectedArea,
+                            crop: this.selectedCrop,
+                            yield: "12",
+                            units: "Bunches"
+                        });
+
+                    })
+                    .catch((error)=>{
+
+                    })
+                    //block c
+
+                   
                     
-                    this.harvLogs.push({
-                        date: this.startDate,
-                        area: this.selectedArea,
-                        crop: this.selectedCrop,
-                        yield: "12",
-                        units: "Bunches"
-                    });
+                    
                 }
 
 
