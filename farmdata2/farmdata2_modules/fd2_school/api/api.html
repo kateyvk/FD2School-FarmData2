@@ -38,7 +38,7 @@
 
         <label for="crop">Select Crop:</label>
         <select id="crop" v-model="selectedCrop">
-            <option v-for="crop in crops" :key="crop" :value="crop">{{ crop }}</option>
+            <option v-for="crop in cropNames" :key="crop" :value="crop">{{ crop }}</option>
         </select>
         
         <h3>Selected Area: {{ selectedArea }}</h3>
@@ -103,18 +103,25 @@
     <script>
         var app= new Vue({
             el: '#vue-app',
+            
             data: {
                 reportTitle: 'My Sample Harvest Report',
                 startDate: " ",
                 endDate: " ",
                 selectedCrop:"Wheat",
                 selectedArea: " ",
-                crops: ["Wheat","Corn","Onions","Lettuce","Kale"],
                 areas: ["Field1","Field2","Orion-3"],
                 harvLogs: [],
                 Farm:" ",
                 User:" ",
-                Language:" "
+                Language:" ",
+                idToCropMap: new Map()
+            },
+            computed:{
+                cropNames(){
+                    return this.transformMapToArray(this.idToCropMap);
+                }
+                
             },
             methods: {
                 generateReport: function(){
@@ -135,6 +142,7 @@
 
                     })
                     .catch((error)=>{
+                        console.log(error);
 
                     })
                     //block c
@@ -142,9 +150,22 @@
                    
                     
                     
+                },
+                transformMapToArray(map){
+                    return [...map.values()];
                 }
 
 
+            },
+            created(){
+                getIDToCropMap()
+                    .then((theMap)=> {
+                        this.idToCropMap = theMap;
+                    })
+                    .catch((error)=>{
+                        console.log("Error getting crop ID to croup name map");
+                        console.log(error);
+                    });
             },
             
         });
