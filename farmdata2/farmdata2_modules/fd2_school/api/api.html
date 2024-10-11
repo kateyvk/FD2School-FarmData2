@@ -50,6 +50,18 @@
 
         <button @click='generateReport'>Generate Report</button>
 
+        <h3>Farm:{{ Farm }}</h3>
+        <label for="farm">Farm Name:</label>
+        <input type="text" id="farm" v-model="Farm">
+
+        <h3>User:{{ User }}</h3>
+        <label for="user">User Name:</label>
+        <input type="text" id="user" v-model="User">
+
+        <h3>Language:{{ Language }}</h3>
+        <label for="language">Language:</label>
+        <input type="text" id="language" v-model="Language">
+
         <h2>Harvest Logs</h2>
         <div v-if="harvLogs.length > 0">
             <table>
@@ -99,7 +111,10 @@
                 selectedArea: " ",
                 crops: ["Wheat","Corn","Onions","Lettuce","Kale"],
                 areas: ["Field1","Field2","Orion-3"],
-                harvLogs: []
+                harvLogs: [],
+                Farm:" ",
+                User:" ",
+                Language:" "
             },
             methods: {
                 generateReport: function(){
@@ -114,7 +129,8 @@
                 }
 
 
-            }
+            },
+            
         });
         Vue.config.devtools = true;
     </script>
