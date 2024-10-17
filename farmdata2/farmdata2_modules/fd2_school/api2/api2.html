@@ -63,7 +63,7 @@
         <input type="text" id="language" v-model="Language">
 
         <h2>Harvest Logs</h2>
-        <div v-if="harvLogs.length > 0">
+        <div v-if="harvestReportRows.length > 0">
             <table>
                 <thead>
                     <tr>
@@ -76,14 +76,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(log,index) in harvLogs" :key="log.date">
+                    <tr v-for="(row,index) in harvestReportRows" :key="index">
     
                         <td> {{ index+1 }} </td>
-                        <td> {{ log.date }}</td>
-                        <td> {{ log.crop }}</td>
-                        <td> {{ log.area }}</td>
-                        <td> {{ log.yield }}</td>
-                        <td> {{ log.units }}</td>
+                        <td> {{ row.date }}</td>
+                        <td> {{ row.crop }}</td>
+                        <td> {{ row.area }}</td>
+                        <td> {{ row.yield }}</td>
+                        <td> {{ row.units }}</td>
                     </tr>
                 </tbody>
     
@@ -106,9 +106,9 @@
             
             data: {
                 reportTitle: 'My Sample Harvest Report',
-                startDate: "2020-05-05",
-                endDate: "2020-05-15",
-                selectedCrop:"Wheat",
+                startDate: "",
+                endDate: "",
+                selectedCrop:"",
                 selectedArea: " ",
                 areas: ["Field1","Field2","Orion-3"],
                 harvLogs: [],
@@ -121,21 +121,39 @@
             computed:{
                 cropNames(){
                     return this.transformMapToArray(this.idToCropMap);
+                },
+                harvestReportRows() {
+	                let tableRows = []
+	                for(let log of this.allHarvestLogs) {
+                        if(log.crop == this.selectedCrop){
+                            let tableRow = {
+			                    date:dayjs.unix(log.timestamp).format("MMMM D, YYYY"),
+                                crop:this.idToCropMap.get(log.data.crop_tid),
+                                area:log.area[0].name,
+                                yield:log.quantity[0].value, 
+                                units:log.quantity[0].unit.name
+		                    }
+                     
+                        tableRows.push(tableRow)
+                            
+                        }
+                        
+
+		                
+	                }
+	                return tableRows
                 }
-                
             },
+
+                
+            
             methods: {
                 generateReport: function(){
 
-                    requestStr="/log.json?type=farm_harvest&timestamp[ge]=1588651200&timestamp[le]=1589515200";
+                    requestStr="/log.json?type=farm_harvest/log.json?type=farm_harvest&timestamp[ge]=1588651200&timestamp[le]=1589515200";
 
 
-                    startTimestamp = dayjs(this.startDate).unix();
-                    endTimestamp = dayjs(this.endDate).unix();
-
-                    console.log("Start Timestamp",startTimestamp);
-                    console.log("End Timestamp",endTimestamp);
-                    console.log("Request String",requestStr);
+                    
 
                     getAllPages(requestStr, this.allHarvestLogs)
                     .then(() =>{
