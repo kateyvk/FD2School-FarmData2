@@ -106,8 +106,8 @@
             
             data: {
                 reportTitle: 'My Sample Harvest Report',
-                startDate: " ",
-                endDate: " ",
+                startDate: "2020-05-05",
+                endDate: "2020-05-15",
                 selectedCrop:"Wheat",
                 selectedArea: " ",
                 areas: ["Field1","Field2","Orion-3"],
@@ -115,7 +115,8 @@
                 Farm:" ",
                 User:" ",
                 Language:" ",
-                idToCropMap: new Map()
+                idToCropMap: new Map(),
+                allHarvestLogs: []
             },
             computed:{
                 cropNames(){
@@ -125,6 +126,26 @@
             },
             methods: {
                 generateReport: function(){
+
+                    requestStr="/log.json?type=farm_harvest&timestamp[ge]=1588651200&timestamp[le]=1589515200";
+
+
+                    startTimestamp = dayjs(this.startDate).unix();
+                    endTimestamp = dayjs(this.endDate).unix();
+
+                    console.log("Start Timestamp",startTimestamp);
+                    console.log("End Timestamp",endTimestamp);
+                    console.log("Request String",requestStr);
+
+                    getAllPages(requestStr, this.allHarvestLogs)
+                    .then(() =>{
+                        console.log("All Harvest logs grabbed",this.allHarvestLogs);
+                    })
+                    .catch((err)=>{
+                        console.error("Error grabbing the Harvest Logs",err);
+
+                    })
+ 
 
                     axios.get('/farm.json')
                     .then((response)=>{
